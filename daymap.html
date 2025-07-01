@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <!-- ...existing code... -->
-  <title>Daymap Import</title>
+  <title>Easy Method</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap" rel="stylesheet" />
   <style>
     body { font-family: 'Space Grotesk',sans-serif; background: #202A44; color: #fff; padding: 2rem; }
@@ -17,14 +17,14 @@
 </head>
 <body>
 <div class="center" style="margin-bottom:1rem;">
-  <a href="index.html"><button>Main GPA Tracker</button></a>
-  <a href="term-gpa.html"><button>Term/Semester Mode</button></a>
-  <a href="dashboard-converter.html"><button>Dashboard & Converter</button></a>
-  <a href="legal.html"><button>Legal & Contributors</button></a>
+  <a href="index.html"><button style="font-family: 'Space Grotesk',sans-serif;">Main GPA Tracker</button></a>
+  <a href="term-gpa.html"><button style="font-family: 'Space Grotesk',sans-serif;">Term/Semester Mode</button></a>
+  <a href="dashboard-converter.html"><button style="font-family: 'Space Grotesk',sans-serif;">Dashboard & Converter</button></a>
+  <a href="legal.html"><button style="font-family: 'Space Grotesk',sans-serif;">Legal & Contributors</button></a>
 </div>
 
 <div class="glass">
-  <h2>Import Assessments from Daymap</h2>
+  <h2>Easy Method</h2>
   <ol>
     <li>Go to <a href="https://gihs.daymap.net/daymap/student/portfolio.aspx?tab=Assessment_Results" target="_blank">your Daymap Assessment Results page</a>.</li>
     <li>Open the browser console (F12 or Ctrl+Shift+I).</li>
@@ -73,7 +73,7 @@ javascript:_resultsFilter.View = "tabular";resultFilterChanged();setTimeout(func
     <li>Copy the GPA and percent from the alert or console, and paste it below to import into the GPA Calculator.</li>
     <li>If pasting is blocked, type <b>allow pasting</b> below and try again.</li>
   </ol>
-  <textarea id="daymapInput" placeholder="Paste your Daymap data here..."></textarea>
+  <textarea id="daymapInput" placeholder="Paste your Easy Method data here..."></textarea>
   <button onclick="parseDaymap()">Import to GPA Calculator</button>
   <p id="importStatus" class="center tiny"></p>
 </div>
@@ -81,7 +81,7 @@ javascript:_resultsFilter.View = "tabular";resultFilterChanged();setTimeout(func
 function parseDaymap() {
   const input = document.getElementById('daymapInput').value.trim();
   if (input.toLowerCase() === 'allow pasting') {
-    document.getElementById('importStatus').textContent = "Pasting enabled. Please paste your Daymap data now.";
+    document.getElementById('importStatus').textContent = "Pasting enabled. Please paste your Easy Method data now.";
     document.getElementById('daymapInput').value = '';
     document.getElementById('daymapInput').focus();
     return;
@@ -97,5 +97,9 @@ function parseDaymap() {
   }
 }
 </script>
+<!-- Add Contributor Guide link below -->
+<div class="center" style="margin-top:2rem;">
+  <a href="https://quuuut.github.io/gpacalc/" target="_blank"><button style="font-family: 'Space Grotesk',sans-serif;">Contributor Guide</button></a>
+</div>
 </body>
 </html>
