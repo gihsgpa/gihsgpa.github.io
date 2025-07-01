@@ -73,7 +73,7 @@ javascript:_resultsFilter.View = "tabular";resultFilterChanged();setTimeout(func
     <li>Copy the GPA and percent from the alert or console, and paste it below to import into the GPA Calculator.</li>
     <li>If pasting is blocked, type <b>allow pasting</b> below and try again.</li>
   </ol>
-  <textarea id="daymapInput" placeholder="Paste your Easy Method data here..."></textarea>
+  <textarea id="daymapInput"></textarea>
   <button onclick="parseDaymap()">Import to GPA Calculator</button>
   <p id="importStatus" class="center tiny"></p>
 </div>
@@ -97,9 +97,26 @@ function parseDaymap() {
   }
 }
 </script>
-<!-- Add Contributor Guide link below -->
+<!-- Highlighted contributed by section -->
 <div class="center" style="margin-top:2rem;">
-  <a href="https://quuuut.github.io/gpacalc/" target="_blank"><button style="font-family: 'Space Grotesk',sans-serif;">Contributor Guide</button></a>
+  <a href="https://quuuut.github.io/gpacalc/" target="_blank" style="
+    display: inline-block;
+    background: linear-gradient(90deg, #1de9b6 0%, #1dc8e9 100%);
+    color: #202A44;
+    font-family: 'Space Grotesk',sans-serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 1rem 2.2rem;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 24px #1dc8e955;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    margin-top: 0.5rem;
+    transition: background 0.2s, box-shadow 0.2s;
+  " onmouseover="this.style.background='linear-gradient(90deg,#1dc8e9 0%,#1de9b6 100%)'"
+    onmouseout="this.style.background='linear-gradient(90deg,#1de9b6 0%,#1dc8e9 100%)'">
+    Contributed by quuuut – See original version
+  </a>
 </div>
 </body>
 </html>
