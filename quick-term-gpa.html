@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simplified GPA Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #202A44;
+      color: white;
+      margin: 0;
+      padding: 2rem;
+    }
+    .glass {
+      background: rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    input[type=number] {
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      border: none;
+      background: rgba(255,255,255,0.2);
+      color: #202A44;
+      font-weight: bold;
+      width: 100%;
+      margin-bottom: 1rem;
+      box-sizing: border-box;
+    }
+    button {
+      background: #FFCD00;
+      color: #202A44;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    button:hover {
+      background: #e6b800;
+    }
+    .result {
+      font-size: 1.2rem;
+      color: #FFCD00;
+      margin-top: 1rem;
+      font-weight: bold;
+      text-align: center;
+    }
+    .tiny {
+      font-size: 0.95rem;
+      color: #B0C4DE;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .center {
+      text-align: center;
+    }
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .nav-bar a button {
+      font-family: 'Space Grotesk',sans-serif;
+    }
+  </style>
+</head>
+<body>
+<div class="nav-bar">
+  <a href="index.html"><button>Main GPA Tracker</button></a>
+  <a href="term-gpa.html"><button>Term/Semester Mode</button></a>
+  <a href="dashboard-converter.html"><button>Dashboard & Converter</button></a>
+  <a href="daymap.html"><button>Easy Method</button></a>
+  <a href="legal.html"><button>Legal & Contributors</button></a>
+</div>
+<div class="glass">
+  <h2 style="color:#FFCD00;text-align:center;">Simplified GPA Calculator</h2>
+  <p class="tiny">Enter your marks for each subject. Instantly see your average GPA!</p>
+  <div id="inputs"></div>
+  <button onclick="addInput()">+ Add Subject</button>
+  <button onclick="calculateGPA()">Calculate GPA</button>
+  <div class="result" id="gpaResult"></div>
+  <div class="tiny">GPA is rounded using the same custom logic as the main calculator.</div>
+  <div class="center" style="margin-top:1rem;">
+    <a href="index.html"><button style="background:#3B5998;color:white;">Back to Main GPA Calculator</button></a>
+  </div>
+</div>
+<script>
+  const allowedDecimals = [0.00, 0.14, 0.29, 0.43, 0.57, 0.71, 0.84];
+  function roundToGPAConstant(value) {
+    const intPart = Math.floor(value);
+    const decimal = value - intPart;
+    let closest = allowedDecimals.reduce((a, b) => Math.abs(b - decimal) < Math.abs(a - decimal) ? b : a);
+    return parseFloat((intPart + closest).toFixed(2));
+  }
+  function percentageToGPA(percent) {
+    const scale = [
+      { min: 95, gpa: 15 }, { min: 90, gpa: 14 }, { min: 85, gpa: 13 },
+      { min: 80, gpa: 12 }, { min: 75, gpa: 11 }, { min: 70, gpa: 10 },
+      { min: 65, gpa: 9 }, { min: 60, gpa: 8 }, { min: 55, gpa: 7 },
+      { min: 50, gpa: 6 }, { min: 45, gpa: 5 }, { min: 40, gpa: 4 },
+      { min: 35, gpa: 3 }, { min: 30, gpa: 2 }, { min: 25, gpa: 1 },
+      { min: 0, gpa: 0 },
+    ];
+    return scale.find(s => percent >= s.min)?.gpa || 0;
+  }
+  function addInput() {
+    const div = document.createElement('div');
+    div.className = 'input-group';
+    div.innerHTML = `
+      <input type="number" min="0" max="100" placeholder="Mark out of 100" />
+      <button onclick="this.parentElement.remove()">Remove</button>
+    `;
+    document.getElementById('inputs').appendChild(div);
+  }
+  function calculateGPA() {
+    const inputs = document.querySelectorAll('#inputs input[type=number]');
+    let totalGPA = 0, count = 0;
+    inputs.forEach(input => {
+      const val = parseFloat(input.value);
+      if (!isNaN(val)) {
+        const gpa = percentageToGPA(val);
+        totalGPA += gpa;
+        count++;
+      }
+    });
+    const avgGPA = count ? totalGPA / count : 0;
+    const roundedGPA = roundToGPAConstant(avgGPA);
+    document.getElementById('gpaResult').textContent = count
+      ? `Your Simplified GPA: ${roundedGPA.toFixed(2)} / 15`
+      : 'Enter marks to calculate GPA!';
+  }
+  // Start with two subjects by default
+  addInput();
+  addInput();
+</script>
+</body>
+</html>
