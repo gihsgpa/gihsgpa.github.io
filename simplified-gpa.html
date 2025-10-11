@@ -3,340 +3,336 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Simplified GPA Calculator</title>
+  <title>GPA Calculator</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap" rel="stylesheet" />
   <style>
-    /* === Main Theme Styles === */
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background-color: #202A44; /* dark blue */
-      color: white;
-      margin: 0;
-      padding: 2rem;
-    }
-    .glass {
-      background: rgba(255, 255, 255, 0.1); /* transparent white */
-      backdrop-filter: blur(10px);
-      border-radius: 1rem;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-    }
-    .input-group {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-      align-items: center;
-    }
-    input[type=number], input[type=text], select {
-      padding: 0.4rem;
-      border: none;
-      border-radius: 0.5rem;
-      width: 100%;
-      box-sizing: border-box;
-      background-color: rgba(255, 255, 255, 0.2); /* lighter transparent white */
-      color: #202A44; /* dark blue */
-      font-weight: 600;
-    }
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    button {
-      padding: 0.4rem 0.75rem;
-      background-color: #3B5998; /* medium blue */
-      color: white;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
-      user-select: none;
-    }
-    button:hover {
-      background-color: #2E4372; /* darker blue */
-    }
-    .center {
-      text-align: center;
-    }
-    .key-table {
-      margin: 1rem auto;
-      border-collapse: collapse;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 1rem;
-      overflow: hidden;
-      max-width: 500px;
-      color: #202A44;
-      font-weight: 700;
-    }
-    .key-table th, .key-table td {
-      padding: 0.5rem 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      text-align: center;
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-    .highlight {
-      background-color: #3B5998;
-      color: white;
-      font-weight: bold;
-    }
-    .tiny {
-      font-size: 0.9rem;
-      color: #B0C4DE; /* light steel blue */
-    }
-    .btn-delete {
-      background-color: #2E4372; /* darker blue */
-      color: white;
-      padding: 0.2rem 0.5rem;
-      font-weight: normal;
-      font-size: 0.9rem;
-      border-radius: 0.3rem;
-      cursor: pointer;
-      border: none;
-      margin-left: 0.3rem;
-      transition: background 0.2s;
-      user-select: none;
-    }
-    .btn-delete:hover {
-      background-color: #1C2D4F; /* even darker blue */
-    }
-    .subject-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-      gap: 0.5rem;
-    }
-    .assessment-label {
-      width: 50px;
-      font-weight: bold;
-      font-size: 0.8rem;
-      color: white;
-      text-align: center;
-      user-select: none;
-    }
-    /* === Navigation Bar === */
-    .nav-bar {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .nav-bar a button {
-      font-family: 'Space Grotesk',sans-serif;
-    }
-    /* === Extra spacing for clarity === */
-    .spacer { height: 2rem; }
-    /* === Responsive adjustments === */
-    @media (max-width: 600px) {
-      body { padding: 0.5rem; }
-      .glass { padding: 0.5rem; }
-      .key-table { max-width: 100%; }
-    }
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: #202A44;
+    color: white;
+    margin: 0;
+    padding: 2rem;
+  }
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+  .input-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+  }
+  input[type=number], input[type=text] {
+    padding: 0.4rem;
+    border: none;
+    border-radius: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  button {
+    padding: 0.4rem 0.75rem;
+    background-color: #FFCD00;
+    color: #202A44;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background-color: #e6b800;
+  }
+  .center {
+    text-align: center;
+  }
+  canvas {
+    background: #ffffff0a;
+    border-radius: 1rem;
+    padding: 1rem;
+    max-width: 100%;
+  }
+  .key-table {
+    margin: 1rem auto;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.08);
+    border-radius: 1rem;
+    overflow: hidden;
+    max-width: 500px;
+  }
+  .key-table th, .key-table td {
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+  }
+  .highlight {
+    background-color: #FFCD00;
+    color: #202A44;
+    font-weight: bold;
+  }
+  .tiny {
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+  .btn-delete {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    font-weight: normal;
+    font-size: 0.9rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    border: none;
+    margin-left: 0.3rem;
+    transition: background 0.2s;
+  }
+  .btn-delete:hover {
+    background-color: #e04343;
+  }
+  .subject-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .assessment-label {
+    width: 50px;
+    font-weight: bold;
+  }
   </style>
 </head>
 <body>
-<!-- === Navigation Bar === -->
-<div class="nav-bar">
-  <a href="index.html"><button>Main GPA Tracker</button></a>
-  <a href="term-gpa.html"><button>Term/Semester Mode</button></a>
-  <a href="simplified-gpa.html"><button>Simplified GPA Calculator</button></a>
-  <a href="dashboard-converter.html"><button>Dashboard & Converter</button></a>
-  <a href="daymap.html"><button>Easy Method</button></a>
-  <a href="legal.html"><button>Legal & Contributors</button></a>
+
+<!-- Navigation Buttons -->
+<div class="center" style="margin-bottom:1rem;">
+  <a href="index.html"><button style="font-family: 'Space Grotesk',sans-serif;">Main GPA Tracker</button></a>
+  <a href="simplified-gpa.html"><button style="font-family: 'Space Grotesk',sans-serif;">Simplified GPA Calculator</button></a>
+  <a href="term-gpa.html"><button style="font-family: 'Space Grotesk',sans-serif;">Term/Semester Mode</button></a>
+  <a href="dashboard-converter.html"><button style="font-family: 'Space Grotesk',sans-serif;">Dashboard & Converter</button></a>
+  <a href="daymap.html"><button style="font-family: 'Space Grotesk',sans-serif;">Easy Method</button></a>
+  <a href="legal.html"><button style="font-family: 'Space Grotesk',sans-serif;">Legal & Contributors</button></a>
 </div>
-<div class="spacer"></div>
-<!-- === Main Heading === -->
-<h1 class="center">Simplified GPA Calculator 🧮</h1>
-<p class="center tiny">Estimation only — GPA rounding follows fixed steps. This tool is designed for quick, easy GPA calculation.</p>
-<div class="spacer"></div>
-<!-- === Main Calculator Section === -->
-<div class="glass">
-  <h2 class="center" style="color:#FFCD00;">Enter Your Subject Marks</h2>
-  <p class="tiny center">Add your subjects below. Enter your mark out of 100 for each subject. Click "Calculate GPA" to see your result instantly.</p>
-  <div id="subjectsContainer"></div>
-  <button onclick="addSubject()">+ Add Subject</button>
-  <button onclick="calculateGPA()">Calculate GPA</button>
-  <div class="spacer"></div>
-  <h2 class="center">Your GPA (Rounded): <span id="overallGPA">0.00</span> / 15</h2>
-  <h3 class="center tiny">Raw GPA: <span id="rawGPA">0.00</span></h3>
-  <p class="center" id="motivational"></p>
-  <div class="spacer"></div>
-  <h3 class="center">GPA Decimal Rounding Key</h3>
-  <table class="key-table" id="gpaKeyTable">
-    <tr id="keyRow"></tr>
-  </table>
-  <div class="spacer"></div>
-  <h3 class="center">📊 GPA to Letter Grade Conversion</h3>
-  <table class="key-table" style="max-width: 400px; margin: 1rem auto;">
-    <thead>
-      <tr>
-        <th>GPA</th>
-        <th>Letter Grade</th>
-        <th>Approx. Percentage</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>15</td><td>A+</td><td>95–100%</td></tr>
-      <tr><td>14</td><td>A</td><td>90–94%</td></tr>
-      <tr><td>13</td><td>A−</td><td>85–89%</td></tr>
-      <tr><td>12</td><td>B+</td><td>80–84%</td></tr>
-      <tr><td>11</td><td>B</td><td>75–79%</td></tr>
-      <tr><td>10</td><td>B−</td><td>70–74%</td></tr>
-      <tr><td>9</td><td>C+</td><td>65–69%</td></tr>
-      <tr><td>8</td><td>C</td><td>60–64%</td></tr>
-      <tr><td>7</td><td>C−</td><td>55–59%</td></tr>
-      <tr><td>6</td><td>D+</td><td>50–54%</td></tr>
-      <tr><td>5</td><td>D</td><td>45–49%</td></tr>
-      <tr><td>4</td><td>D−</td><td>40–44%</td></tr>
-      <tr><td>3</td><td>E+</td><td>35–39%</td></tr>
-      <tr><td>2</td><td>E</td><td>30–34%</td></tr>
-      <tr><td>1</td><td>E−</td><td>25–29%</td></tr>
-      <tr><td>0</td><td>F</td><td>Below 25%</td></tr>
-    </tbody>
-  </table>
-  <div class="spacer"></div>
-  <!-- Optional Grade Input to Reverse Convert to Marks -->
-  <div class="glass center" style="max-width: 400px; margin: 2rem auto;">
-    <h4>🎯 Grade to Marks Converter</h4>
-    <p style="font-size: 0.9rem;">Estimate what mark out of 100 your letter grade usually corresponds to:</p>
-    <select id="gradeSelect" onchange="convertGradeToMark()">
-      <option value="">Select a grade</option>
-      <option value="15">A+</option>
-      <option value="14">A</option>
-      <option value="13">A−</option>
-      <option value="12">B+</option>
-      <option value="11">B</option>
-      <option value="10">B−</option>
-      <option value="9">C+</option>
-      <option value="8">C</option>
-      <option value="7">C−</option>
-      <option value="6">D+</option>
-      <option value="5">D</option>
-      <option value="4">D−</option>
-      <option value="3">E+</option>
-      <option value="2">E</option>
-      <option value="1">E−</option>
-      <option value="0">F</option>
-    </select>
-    <p id="gradeToMarkOutput" style="margin-top: 1rem; font-weight: bold;"></p>
-  </div>
-  <div class="spacer"></div>
-  <!-- Terms/Disclaimer -->
-  <div class="glass center tiny" style="max-width: 600px; margin: 3rem auto;">
-    <p><strong>Disclaimer:</strong> This calculator is an estimation tool only. GPA values are rounded using custom decimal logic (0.00, 0.14, 0.29, etc.). It is not affiliated with any official school grading system. No data is saved, transmitted, or collected. Designed in accordance with GDPR and educational privacy principles.</p>
-  </div>
-  <div class="spacer"></div>
-  <!-- Back to Main GPA Calculator Button -->
-  <div class="center" style="margin-top:1rem;">
-    <a href="index.html"><button style="background:#3B5998;color:white;">Back to Main GPA Calculator</button></a>
-  </div>
+
+<h1 class="center">GPA Calculator 🧮</h1>
+<p class="center tiny">Estimation only — GPA rounding follows fixed steps.</p>
+
+<div class="center" style="margin-bottom: 1rem;">
+  <label for="termSelect">Select Term/Semester: </label>
+  <select id="termSelect" onchange="renderSubjects()">
+    <option value="all">All</option>
+    <option value="term1">Term 1</option>
+    <option value="term2">Term 2</option>
+    <option value="term3">Term 3</option>
+    <option value="term4">Term 4</option>
+    <option value="semester1">Semester 1</option>
+    <option value="semester2">Semester 2</option>
+  </select>
 </div>
-<!-- === Script Section === -->
+
+<button onclick="addSubject()">+ Add Subject</button>
+<div id="subjectsContainer"></div>
+
+<h2 class="center">Your GPA (Rounded): <span id="overallGPA">0.00</span> / 15</h2>
+<h3 class="center tiny">Raw GPA: <span id="rawGPA">0.00</span></h3>
+<h2 class="center">Semester GPA: <span id="semesterGPA">0.00</span> / 15</h2>
+<p class="center" id="motivational"></p>
+
+<canvas id="gpaChart" width="400" height="200"></canvas>
+
+<h3 class="center">GPA Decimal Rounding Key</h3>
+<table class="key-table" id="gpaKeyTable">
+  <tr id="keyRow"></tr>
+</table>
+
+<!-- GPA to Letter Grade Conversion Table -->
+<h3 class="center">📊 GPA to Letter Grade Conversion</h3>
+<table class="key-table" style="max-width: 400px; margin: 1rem auto;">
+  <thead>
+    <tr>
+      <th>GPA</th>
+      <th>Letter Grade</th>
+      <th>Approx. Percentage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>15</td><td>A+</td><td>95–100%</td></tr>
+    <tr><td>14</td><td>A</td><td>90–94%</td></tr>
+    <tr><td>13</td><td>A−</td><td>85–89%</td></tr>
+    <tr><td>12</td><td>B+</td><td>80–84%</td></tr>
+    <tr><td>11</td><td>B</td><td>75–79%</td></tr>
+    <tr><td>10</td><td>B−</td><td>70–74%</td></tr>
+    <tr><td>9</td><td>C+</td><td>65–69%</td></tr>
+    <tr><td>8</td><td>C</td><td>60–64%</td></tr>
+    <tr><td>7</td><td>C−</td><td>55–59%</td></tr>
+    <tr><td>6</td><td>D+</td><td>50–54%</td></tr>
+    <tr><td>5</td><td>D</td><td>45–49%</td></tr>
+    <tr><td>4</td><td>D−</td><td>40–44%</td></tr>
+    <tr><td>3</td><td>E+</td><td>35–39%</td></tr>
+    <tr><td>2</td><td>E</td><td>30–34%</td></tr>
+    <tr><td>1</td><td>E−</td><td>25–29%</td></tr>
+    <tr><td>0</td><td>F</td><td>Below 25%</td></tr>
+  </tbody>
+</table>
+
 <script>
-  // === GPA Calculation Logic ===
-  const allowedDecimals = [0.00, 0.14, 0.29, 0.43, 0.57, 0.71, 0.84];
-  let subjects = [];
-  function roundToGPAConstant(value) {
-    const intPart = Math.floor(value);
-    const decimal = value - intPart;
-    let closest = allowedDecimals.reduce((a, b) => Math.abs(b - decimal) < Math.abs(a - decimal) ? b : a);
-    return parseFloat((intPart + closest).toFixed(2));
-  }
-  function percentageToGPA(percent) {
-    const scale = [
-      { min: 95, gpa: 15 }, { min: 90, gpa: 14 }, { min: 85, gpa: 13 },
-      { min: 80, gpa: 12 }, { min: 75, gpa: 11 }, { min: 70, gpa: 10 },
-      { min: 65, gpa: 9 }, { min: 60, gpa: 8 }, { min: 55, gpa: 7 },
-      { min: 50, gpa: 6 }, { min: 45, gpa: 5 }, { min: 40, gpa: 4 },
-      { min: 35, gpa: 3 }, { min: 30, gpa: 2 }, { min: 25, gpa: 1 },
-      { min: 0, gpa: 0 },
-    ];
-    return scale.find(s => percent >= s.min)?.gpa || 0;
-  }
-  function addSubject() {
-    subjects.push({ score: 0 });
-    renderSubjects();
-  }
-  function removeSubject(index) {
-    subjects.splice(index, 1);
-    renderSubjects();
-  }
-  function renderSubjects() {
-    const container = document.getElementById('subjectsContainer');
-    container.innerHTML = '';
-    subjects.forEach((sub, index) => {
-      const div = document.createElement('div');
-      div.className = 'input-group';
-      div.innerHTML = `
-        <input type="number" min="0" max="100" placeholder="Mark out of 100" value="${sub.score}" oninput="subjects[${index}].score = parseFloat(this.value)||0; updateGPA()" />
-        <button class="btn-delete" onclick="removeSubject(${index})">Remove</button>
+const allowedDecimals = [0.00, 0.14, 0.29, 0.43, 0.57, 0.71, 0.84];
+let subjects = [];
+let gpaChart = null;
+
+function roundToGPAConstant(value) {
+  const intPart = Math.floor(value);
+  const decimal = value - intPart;
+  let closest = allowedDecimals.reduce((a, b) => Math.abs(b - decimal) < Math.abs(a - decimal) ? b : a);
+  return parseFloat((intPart + closest).toFixed(2));
+}
+
+function percentageToGPA(percent) {
+  const scale = [
+    { min: 95, gpa: 15 }, { min: 90, gpa: 14 }, { min: 85, gpa: 13 },
+    { min: 80, gpa: 12 }, { min: 75, gpa: 11 }, { min: 70, gpa: 10 },
+    { min: 65, gpa: 9 }, { min: 60, gpa: 8 }, { min: 55, gpa: 7 },
+    { min: 50, gpa: 6 }, { min: 45, gpa: 5 }, { min: 40, gpa: 4 },
+    { min: 35, gpa: 3 }, { min: 30, gpa: 2 }, { min: 25, gpa: 1 },
+    { min: 0, gpa: 0 },
+  ];
+  return scale.find(s => percent >= s.min)?.gpa || 0;
+}
+
+function addSubject() {
+  const selectedTerm = document.getElementById('termSelect').value || 'term1';
+  subjects.push({ name: '', assessments: [], term: selectedTerm });
+  renderSubjects();
+}
+
+function renderSubjects() {
+  const container = document.getElementById('subjectsContainer');
+  const selectedTerm = document.getElementById('termSelect').value;
+  container.innerHTML = '';
+
+  subjects.forEach((sub, index) => {
+    const show = selectedTerm === 'all' ||
+                sub.term === selectedTerm ||
+                (selectedTerm === 'semester1' && (sub.term === 'term1' || sub.term === 'term2')) ||
+                (selectedTerm === 'semester2' && (sub.term === 'term3' || sub.term === 'term4'));
+
+    if (!show) return;
+
+    const div = document.createElement('div');
+    div.className = 'glass';
+    div.innerHTML = `
+      <div class="subject-header">
+        <input type="text" placeholder="Subject Name" value="${sub.name}" onchange="subjects[${index}].name = this.value; updateGPA()" />
+        <select onchange="subjects[${index}].term = this.value; renderSubjects()">
+          <option value="term1" ${sub.term === 'term1' ? 'selected' : ''}>Term 1</option>
+          <option value="term2" ${sub.term === 'term2' ? 'selected' : ''}>Term 2</option>
+          <option value="term3" ${sub.term === 'term3' ? 'selected' : ''}>Term 3</option>
+          <option value="term4" ${sub.term === 'term4' ? 'selected' : ''}>Term 4</option>
+        </select>
+        <button class="btn-delete" onclick="subjects.splice(${index},1); renderSubjects()">Delete Subject</button>
+      </div>
+      <div id="assessments-${index}">
+        <div class="input-group">
+          <div class="assessment-label">Mark</div>
+          <div class="assessment-label">Out Of</div>
+          <div class="assessment-label">Weight</div>
+          <div style="width: 25px;"></div>
+        </div>
+      </div>
+      <button onclick="subjects[${index}].assessments.push({score:0,outOf:100,weight:1}); renderSubjects()">+ Add Assessment</button>
+    `;
+    container.appendChild(div);
+
+    const assessDiv = div.querySelector(`#assessments-${index}`);
+    sub.assessments.forEach((a, aIdx) => {
+      const row = document.createElement('div');
+      row.className = 'input-group';
+      row.innerHTML = `
+        <input type="number" value="${a.score}" min="0" placeholder="Score" oninput="subjects[${index}].assessments[${aIdx}].score = parseFloat(this.value)||0; updateGPA()" />
+        <input type="number" value="${a.outOf}" min="1" placeholder="Out Of" oninput="subjects[${index}].assessments[${aIdx}].outOf = parseFloat(this.value)||100; updateGPA()" />
+        <input type="number" value="${a.weight}" min="0" step="0.01" placeholder="Weight" oninput="subjects[${index}].assessments[${aIdx}].weight = parseFloat(this.value)||1; updateGPA()" />
+        <button class="btn-delete" onclick="subjects[${index}].assessments.splice(${aIdx},1); renderSubjects()">X</button>
       `;
-      container.appendChild(div);
+      assessDiv.appendChild(row);
     });
-    updateGPA();
-  }
-  function calculateGPA() {
-    updateGPA();
-  }
-  function updateGPA() {
-    let totalGPA = 0, rawGPA = 0, count = 0;
-    subjects.forEach(sub => {
-      const val = parseFloat(sub.score);
-      if (!isNaN(val)) {
-        const gpa = percentageToGPA(val);
-        totalGPA += roundToGPAConstant(gpa);
-        rawGPA += gpa;
-        count++;
+  });
+
+  updateGPA();
+}
+
+function updateGPA() {
+  const selectedTerm = document.getElementById('termSelect').value;
+  let totalGPA = 0, rawGPA = 0, count = 0;
+  let semGPA = 0, semRaw = 0, semCount = 0;
+  const subjectGPAs = [];
+
+  subjects.forEach(sub => {
+    let weightedTotal = 0, weightSum = 0;
+    sub.assessments.forEach(a => {
+      const percent = a.outOf > 0 ? (a.score / a.outOf) * 100 : 0;
+      const gpa = percentageToGPA(percent);
+      weightedTotal += gpa * a.weight;
+      weightSum += a.weight;
+    });
+    const avg = weightSum ? weightedTotal / weightSum : 0;
+    const rounded = roundToGPAConstant(avg);
+    totalGPA += rounded;
+    rawGPA += avg;
+    count++;
+
+    const show = selectedTerm === 'all' ||
+                sub.term === selectedTerm ||
+                (selectedTerm === 'semester1' && (sub.term === 'term1' || sub.term === 'term2')) ||
+                (selectedTerm === 'semester2' && (sub.term === 'term3' || sub.term === 'term4'));
+    if (show) {
+      semGPA += rounded;
+      semRaw += avg;
+      semCount++;
+    }
+    subjectGPAs.push({ label: sub.name || "Unnamed", gpa: rounded });
+  });
+
+  document.getElementById('overallGPA').textContent = count ? roundToGPAConstant(totalGPA / count).toFixed(2) : '0.00';
+  document.getElementById('rawGPA').textContent = count ? (rawGPA / count).toFixed(2) : '0.00';
+  document.getElementById('semesterGPA').textContent = semCount ? roundToGPAConstant(semGPA / semCount).toFixed(2) : '0.00';
+  document.getElementById('motivational').textContent = semCount && (semGPA / semCount) < 13 ? "You're more than a number 💙" : '';
+
+  if (!gpaChart) {
+    gpaChart = new Chart(document.getElementById("gpaChart"), {
+      type: "bar",
+      data: {
+        labels: subjectGPAs.map(s => s.label),
+        datasets: [{ label: "Subject GPA", data: subjectGPAs.map(s => s.gpa), backgroundColor: "#3B5998" }]
+      },
+      options: {
+        animation: false,
+        responsive: true,
+        scales: { y: { beginAtZero: true, max: 15 } }
       }
     });
-    const avgGPA = count ? totalGPA / count : 0;
-    const rawAvg = count ? rawGPA / count : 0;
-    document.getElementById('overallGPA').textContent = avgGPA.toFixed(2);
-    document.getElementById('rawGPA').textContent = rawAvg.toFixed(2);
-    document.getElementById('motivational').textContent = avgGPA < 13 ? "You're more than a number 💙" : '';
-    drawKeyRow(rawAvg);
+  } else {
+    gpaChart.data.labels = subjectGPAs.map(s => s.label);
+    gpaChart.data.datasets[0].data = subjectGPAs.map(s => s.gpa);
+    gpaChart.update('none');
   }
-  function drawKeyRow(rawValue) {
-    const decimal = parseFloat((rawValue % 1).toFixed(2));
-    const row = document.getElementById("keyRow");
-    row.innerHTML = '';
-    allowedDecimals.forEach(d => {
-      const td = document.createElement("td");
-      td.textContent = d.toFixed(2);
-      if (Math.abs(d - decimal) < 0.07) td.className = "highlight";
-      row.appendChild(td);
-    });
-  }
-  function convertGradeToMark() {
-    const val = document.getElementById("gradeSelect").value;
-    const output = document.getElementById("gradeToMarkOutput");
-    if    if (val === "") {
-      output.textContent = "";
-      return;
-    }
-    const gpa = parseInt(val);
-    const mapping = {
-      15: "95–100%",
-      14: "90–94%",
-      13: "85–89%",
-      12: "80–84%",
-      11: "75–79%",
-      10: "70–74%",
-      9:  "65–69%",
-      8:  "60–64%",
-      7:  "55–59%",
-      6:  "50–54%",
-      5:  "45–49%",
-      4:  "40–44%",
-      3:  "35–39%",
-      2:  "30–34%",
-      1:  "25–29%",
-      0:  "Below 25%",
-    };
-    output.textContent = `That roughly means you scored ${mapping[gpa]}`;
-  }
-  </script>
+
+  const decimal = parseFloat(((rawGPA / count) % 1).toFixed(2));
+  const row = document.getElementById("keyRow");
+  row.innerHTML = '';
+  allowedDecimals.forEach(d => {
+    const td = document.createElement("td");
+    td.textContent = d.toFixed(2);
+    if (Math.abs(d - decimal) < 0.07) td.className = "highlight";
+    row.appendChild(td);
+  });
+}
+
+
+</script>
 </body>
 </html>
+
