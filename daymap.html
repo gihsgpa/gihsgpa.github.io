@@ -81,7 +81,7 @@ javascript:_resultsFilter.View = "tabular";resultFilterChanged();setTimeout(func
   var percent = (avgGPA/15)*100;
   // Custom GPA rounding logic
   function roundToGPAConstant(value) {
-    var allowedDecimals = [0.00,0.14,0.29,0.43,0.57,0.71,0.84];
+    var allowedDecimals = [0.00,0.14,0.29,0.43,0.57,0.71,0.86];
     var intPart = Math.floor(value);
     var decimal = value - intPart;
     var closest = allowedDecimals[0], minDiff = Math.abs(decimal - closest);
