@@ -131,7 +131,7 @@
                         <a id="bookmarklet" style="font-size: 0px; cursor: grab;" class="btn btn-primary btn-sm"
                             ondragstart="document.querySelector('.pointer').style = 'display: block;'"
                             ondragend="document.querySelector('.pointer').style = 'display: none;'"
-                            href="javascript: var round = true; var rounddecimals = 2; DMU.toast({title: 'Fetching...', message: 'Fetching...', toastStyle: 'info'}); fetch('https://raw.githubusercontent.com/quuuut/quuuut.github.io/refs/heads/main/gpacalc/gpacalc.js').then(function (resp){if (!resp.ok) {DMU.toast({title: 'Error', message: 'Failed to fetch: '+resp.status, toastStyle: 'error'}); return}; DMU.toast({title: 'Fetched!', message: 'Running...', toastStyle: 'success'});resp.text().then(function(text){setTimeout(()=>{eval(text)},300)})})">GPA
+                            href="javascript: var round = true; var rounddecimals = 2; DMU.toast({title: 'Fetching...', message: 'Fetching...', toastStyle: 'info'}); fetch('https://raw.githubusercontent.com/gihsgpa/gihsgpa.github.io/main/gpcalc_bookmark/gpacalc_bookmark.js').then(function (resp){if (!resp.ok) {DMU.toast({title: 'Error', message: 'Failed to fetch: '+resp.status, toastStyle: 'error'}); return}; DMU.toast({title: 'Fetched!', message: 'Running...', toastStyle: 'success'});resp.text().then(function(text){setTimeout(()=>{eval(text)},300)})})">GPA
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                 class="bi bi-bookmark-fill" viewBox="0 0 16 16">
                                 <path
